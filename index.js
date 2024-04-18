@@ -3,6 +3,7 @@ dotenv.config();
 
 //Routes
 const threadRoutes = require("./routes/ThreadRoute");
+const userRoutes = require("./routes/UserRoute");
 
 const express = require("express");
 const cors = require("cors");
@@ -24,8 +25,9 @@ app.use(
   })
 );
 
+app.use("/thread", threadRoutes);
+app.use("/user", userRoutes);
+
 app.listen(PORT, () => {
   console.log(`Server is running on PORT ${PORT} `);
 });
-
-app.use("/thread", threadRoutes);
