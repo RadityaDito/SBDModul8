@@ -5,5 +5,6 @@ const router = express.Router();
 router.get("", userController.getAllUser);
 router.get("/:userId", userController.getUserPosts);
 router.post("", userController.createUser);
+router.post("/upsert", userController.updateUser);
 
 module.exports = router;

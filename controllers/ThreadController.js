@@ -7,8 +7,8 @@ exports.getAllParentThread = async function (req, res) {
     const result = await Thread.find()
       .where("parentId")
       .equals(null)
-      .sort({ createdAt: 1 })
-      .populate("children");
+      .sort({ createdAt: 1 });
+
     res.status(200).json({
       success: true,
       message: "Successfully getAllParentThread",
@@ -66,6 +66,13 @@ exports.getThreadById = async function (req, res) {
 exports.createThread = async function (req, res) {
   try {
     const { text, author } = req.body;
+
+    //Check is author exist
+    const checkAuthor = await User.exists({ _id: author });
+
+    if (!checkAuthor) {
+      throw new Error("Author not found");
+    }
 
     const createThread = await Thread.create({ text, author });
 

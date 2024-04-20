@@ -66,20 +66,35 @@ exports.getUserPosts = async function (req, res) {
   }
 };
 
-// exports.updateUser = async function (req, res) {
+// exports.createUserV2 = async function (req, res) {
 //   try {
 //     const { userId, username, name, image, bio } = req.body;
 
-//     await User.findOneAndUpdate(
-//       { id: userId },
-//       {
-//         username: username.toLowerCase(),
-//         name,
-//       },
-//       { upsert: true }
-//     );
+//     const newUser = new User({
+//       id: userId,
+//       username: username,
+//       name,
+//       image,
+//       bio,
+//     });
 
-//     res.status(200).json({ success: true, message: "Success" });
+//     await newUser.save();
+
+//     // await User.findOneAndUpdate(
+//     //   { id: userId },
+//     //   {
+//     //     id: userId,
+//     //     username: username.toLowerCase(),
+//     //     name,
+//     //     image,
+//     //     bio,
+//     //   },
+//     //   { upsert: true }
+//     // );
+
+//     res
+//       .status(200)
+//       .json({ success: true, message: "Success Create User", data: newUser });
 //   } catch (err) {
 //     res.status(400).json({
 //       success: false,
@@ -87,3 +102,28 @@ exports.getUserPosts = async function (req, res) {
 //     });
 //   }
 // };
+
+exports.updateUser = async function (req, res) {
+  try {
+    const { userId, username, name, image, bio } = req.body;
+
+    await User.findOneAndUpdate(
+      { id: userId },
+      {
+        id: userId,
+        username: username.toLowerCase(),
+        name,
+        image,
+        bio,
+      },
+      { upsert: true }
+    );
+
+    res.status(200).json({ success: true, message: "Success Create User" });
+  } catch (err) {
+    res.status(400).json({
+      success: false,
+      message: `Failed to create/update user: ${err.message}`,
+    });
+  }
+};
