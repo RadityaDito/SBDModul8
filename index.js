@@ -25,6 +25,10 @@ app.use(
   })
 );
 
+app.get("/testing", (req, res) => {
+  res.send("Hello World");
+});
+
 app.use("/thread", threadRoutes);
 app.use("/user", userRoutes);
 
